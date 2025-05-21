@@ -4,18 +4,59 @@ import { AiFillFileText } from "react-icons/ai";
 import { IoIosPeople } from "react-icons/io";
 import type { IconType } from "react-icons";
 import { FaChartBar, FaChartLine, FaChartPie, FaGamepad, FaStopwatch } from "react-icons/fa6";
+import { useEffect, useState, type Dispatch } from "react";
+import { HiMenuAlt4 } from "react-icons/hi";
 
 const AdminSidebar = () => {
+  const location = useLocation();
 
-const location = useLocation()
+  const [showModal, setShowModal] = useState<boolean>(false);
+  const [phoneActive, setPhoneActive] = useState<boolean>(
+    window.innerWidth < 1100
+  );
 
+  const resizeHandler = () => {
+    setPhoneActive(window.innerWidth < 1100);
+  };
+
+  useEffect(() => {
+    window.addEventListener("resize", resizeHandler);
+    return () => {
+      window.removeEventListener("resize", resizeHandler);
+    };
+  }, []);
   return (
-    <aside>
-      <h2>Logo.</h2>
-      <DivOne location={location}/>
-      <DivTwo location={location}/> 
-      <DivThree location={location}/>     
-    </aside>
+    <>
+      {phoneActive && (
+        <button id="hamburger" onClick={() => setShowModal(true)}>
+          <HiMenuAlt4 />
+        </button>
+      )}
+      <aside
+        style={
+          phoneActive
+            ? {
+                width: "20rem",
+                height: "100vh",
+                position: "fixed",
+                top: 0,
+                left: showModal ? "0" : "-20rem",
+                transition: "all 0.5s",
+              }
+            : {}
+        }
+      >
+        <h2>Logo.</h2>
+        <DivOne location={location} />
+        <DivTwo location={location} />
+        <DivThree location={location} />
+        {phoneActive && (
+          <button id="close-sidebar" onClick={() => setShowModal(false)}>
+            Close
+          </button>
+        )}
+      </aside>
+    </>
   );
 };
 
@@ -64,13 +105,13 @@ const DivTwo = ({ location }: { location: Location }) => (
   </div>
 );
 
-const DivThree = ({location}: {location:Location}) =>(
+const DivThree = ({location}: {location:Location }) =>(
     <div>
         <h5>Apps</h5>
         <ul>
             <Li url="/admin/app/stopwatch" text="Stopwatch" location={location} Icon={FaStopwatch}/>
             <Li url="/admin/app/Coupon" text="Coupon" location={location} Icon={RiCoupon3Fill}/>
-            <Li url="/admin/app/Toss" text="Customer" location={location} Icon={FaGamepad}/>
+            <Li url="/admin/app/toss" text="Toss" location={location} Icon={FaGamepad}/>
         </ul>
       </div>
 )
