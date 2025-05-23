@@ -7,7 +7,7 @@ const cartItems = [{
   productId: "ashgasdhh",
   photo: "https://m.media-amazon.com/images/W/MEDIAX_1215821-T2/images/I/71BxYolLLiL._SY395_.jpg",
   name: "Nike Shoes",
-  Price:3000,
+  price:3000,
   quantity:4,
   stock:40,
 }];

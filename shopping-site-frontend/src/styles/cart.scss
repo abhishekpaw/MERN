@@ -59,7 +59,7 @@
 }
 
 .cart-item{
-    padding: 2rem;
+    padding: 1rem;
     @include mixing.flex(row,flex-start,center,3rem);
     >img{
         @include mixing.square(10rem);
