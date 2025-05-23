@@ -8,7 +8,7 @@ import { FaPlus } from "react-icons/fa6";
 
 
 interface DataType {
-  photo: string;
+  photo: ReactElement;
   name: string;
   price: number;
   stock: number;
@@ -16,130 +16,40 @@ interface DataType {
 }
 
 const img = "/src/assets/61IRRQ2gWPL.jpg";
+const img2 = "/src/assets/NIKE+QUEST+6.png";
 
 const arr: DataType[] =[
   {
-    photo: img,
+    photo: <img height={34} src={img} alt="Product"/>,
     name: "Lenovo ThinkPad T14s Gen 5",
     price: 108087,
     stock: 15,
     action: <Link to="/admin/product/asdasdhj" className="manage-button">Manage</Link>,
   },
   {
-    photo: img,
+    photo: <img height={34} src={img2} alt="Product"/>,
     name: "Nike Shoes",
     price: 4,
     stock: 300,
     action: <Link to="/admin/product/sd" className="manage-button">Manage</Link>,
   },
   {
-    photo: img,
+    photo: <img height={34} src={img} alt="Product"/>,
     name: "Lenovo ThinkPad T14s Gen 5",
     price: 108087,
     stock: 15,
     action: <Link to="/admin/product/asdasdhj" className="manage-button">Manage</Link>,
   },
-  {
-    photo: img,
-    name: "Nike Shoes",
-    price: 4,
-    stock: 300,
-    action: <Link to="/admin/product/sd" className="manage-button">Manage</Link>,
-  },
-  {
-    photo: img,
-    name: "Lenovo ThinkPad T14s Gen 5",
-    price: 108087,
-    stock: 15,
-    action: <Link to="/admin/product/asdasdhj" className="manage-button">Manage</Link>,
-  },
-  {
-    photo: img,
-    name: "Nike Shoes",
-    price: 4,
-    stock: 300,
-    action: <Link to="/admin/product/sd" className="manage-button">Manage</Link>,
-  },
-  {
-    photo: img,
-    name: "Lenovo ThinkPad T14s Gen 5",
-    price: 108087,
-    stock: 15,
-    action: <Link to="/admin/product/asdasdhj" className="manage-button">Manage</Link>,
-  },
-  {
-    photo: img,
-    name: "Nike Shoes",
-    price: 4,
-    stock: 300,
-    action: <Link to="/admin/product/sd" className="manage-button">Manage</Link>,
-  },
-  {
-    photo: img,
-    name: "Lenovo ThinkPad T14s Gen 5",
-    price: 108087,
-    stock: 15,
-    action: <Link to="/admin/product/asdasdhj" className="manage-button">Manage</Link>,
-  },
-  {
-    photo: img,
-    name: "Nike Shoes",
-    price: 4,
-    stock: 300,
-    action: <Link to="/admin/product/sd" className="manage-button">Manage</Link>,
-  },
-  {
-    photo: img,
-    name: "Lenovo ThinkPad T14s Gen 5",
-    price: 108087,
-    stock: 15,
-    action: <Link to="/admin/product/asdasdhj" className="manage-button">Manage</Link>,
-  },
-  {
-    photo: img,
-    name: "Nike Shoes",
-    price: 4,
-    stock: 300,
-    action: <Link to="/admin/product/sd" className="manage-button">Manage</Link>,
-  },
-  {
-    photo: img,
-    name: "Lenovo ThinkPad T14s Gen 5",
-    price: 108087,
-    stock: 15,
-    action: <Link to="/admin/product/asdasdhj" className="manage-button">Manage</Link>,
-  },
-  {
-    photo: img,
-    name: "Nike Shoes",
-    price: 4,
-    stock: 300,
-    action: <Link to="/admin/product/sd" className="manage-button">Manage</Link>,
-  },
-  {
-    photo: img,
-    name: "Lenovo ThinkPad T14s Gen 5",
-    price: 108087,
-    stock: 15,
-    action: <Link to="/admin/product/asdasdhj" className="manage-button">Manage</Link>,
-  },
-  {
-    photo: img,
-    name: "Nike Shoes",
-    price: 4,
-    stock: 300,
-    action: <Link to="/admin/product/sd" className="manage-button">Manage</Link>,
-  }
 ];
 
 
 
 const columns: ColumnDef<DataType>[] = [
-  { accessorKey:"photo",cell: (_info) => <img height={34} src={img} alt="Product"/>, header: "Photo",sortingFn: 'alphanumeric' },
+  { accessorKey:"photo",cell: (_info) => _info.getValue(), header: "Photo",sortingFn: 'alphanumeric' },
   { accessorKey: "name", header: "Name",sortingFn: 'alphanumeric'},
   { accessorKey: "price", header: "Price",sortingFn: 'alphanumeric' },
   { accessorKey: "stock", header: "Stock",sortingFn: 'alphanumeric' },
-  { accessorKey: "action",cell:(_row) => {return <div><Link to="/admin/product/sd" className="manage-button">Manage</Link></div>}, header: "Action",sortingFn: 'alphanumeric' },
+  { accessorKey: "action",cell:(_row) => _row.getValue(), header: "Action",sortingFn: 'alphanumeric' },
 ];
 
 const Products = () => {

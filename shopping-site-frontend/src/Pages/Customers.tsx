@@ -6,7 +6,7 @@ import TableHOC from "../components/TableHOC";
 import { FaTrash } from "react-icons/fa6";
 
 interface DataType {
-  Avatar: string;
+  Avatar: ReactElement;
   name: string;
   gender: string;
   email: string;
@@ -15,35 +15,36 @@ interface DataType {
 }
 
 const img = "/src/assets/male_user.png";
+const img2 = "/src/assets/female_user.png"
 
 const arr: DataType[] =[
   {
-    Avatar: img,
+    Avatar: <img height={34} src={img} alt="Product"/>,
     name: "Raj",
     gender : "male",
-    email: "amask@gmai.com",
+    email: "amask@gmail.com",
     role:"User",
-    action: <Link to="/admin/product/asdasdhj" className="manage-button">Manage</Link>,
+    action: <button><FaTrash/></button>,
   },
   {
-    Avatar: img,
+    Avatar: <img height={34} src={img2} alt="Product"/>,
     name:"Radha",
     gender : "female",
-    email: "amask@gmai.com",
+    email: "femail@gmail.com",
     role:"admin",
-    action: <Link to="/admin/product/asdasdhj" className="manage-button">Manage</Link>,
+    action: <button><FaTrash/></button>,
   }
 ];
 
 
 
 const columns: ColumnDef<DataType>[] = [
-  { accessorKey:"Avatar",cell: (_info) => <img height={34} src={img} alt="Product"/>, header: "Avatar",sortingFn: 'alphanumeric' },
+  { accessorKey:"Avatar",cell: (_info) => _info.getValue(), header: "Avatar",sortingFn: 'alphanumeric' },
   { accessorKey: "name", header: "Name",sortingFn: 'alphanumeric'},
   { accessorKey: "gender", header: "Gender",sortingFn: 'alphanumeric' },
   { accessorKey: "email", header: "Email",sortingFn: 'alphanumeric' },
   { accessorKey: "role", header: "Role",sortingFn: 'alphanumeric' },
-  { accessorKey: "action",header:"Action",cell:(_row) => <button><FaTrash/></button>,sortingFn: 'alphanumeric' },
+  { accessorKey: "action",header:"Action",cell:(_row) => _row.getValue(),sortingFn: 'alphanumeric' },
 ];
 
 const Customers = () => {

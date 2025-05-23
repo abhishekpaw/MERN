@@ -4,6 +4,9 @@
     background-color: white;
     padding: 4rem;
     overflow-y: auto;
+    &::-webkit-scrollbar{
+            display: none;
+        }
     >h1{
         margin: 0 0 5rem 2rem;
     }

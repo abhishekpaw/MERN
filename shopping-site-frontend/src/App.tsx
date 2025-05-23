@@ -1,6 +1,14 @@
-import {BrowserRouter as Router,Routes,Route, Link} from 'react-router-dom'
+import {BrowserRouter as Router,Routes,Route} from 'react-router-dom'
 import { lazy, Suspense } from 'react' 
 import Loader from './components/loader'
+import Header from './components/header'
+
+
+const Home = lazy(() => import('./Pages/Home'))
+const Seacrh = lazy(() => import('./Pages/Search'))
+const Cart = lazy(() => import('./Pages/Cart'))
+const Shipping = lazy(() => import('./Pages/Shipping'))
+
 
 const Dashboard = lazy(() => import('./Pages/Dashboard'))
 const Products = lazy(() => import('./Pages/Products')) 
@@ -22,9 +30,16 @@ const App = () => {
   return (
     <Router>
       {/* Header*/}
-      <Suspense fallback={<Loader/>}>
+      <Header />
+      <Suspense fallback={<Loader />}>
         <Routes>
-          <Route path="/" element={<Link to="/admin/dashboard">Visit Dashboard</Link>}/>
+          <Route path="/" element={<Home />} />
+          <Route path="/search" element={<Seacrh />} />
+          <Route path="/cart" element={<Cart />} />
+
+          <Route>
+            <Route path="/shipping" element={<Shipping />} />
+          </Route>
 
           <Route path="/admin/dashboard" element={<Dashboard />}></Route>
           <Route path="/admin/product" element={<Products />}></Route>
@@ -39,13 +54,19 @@ const App = () => {
           <Route path="/admin/app/Coupon" element={<Coupon />}></Route>
           <Route path="/admin/app/toss" element={<Toss />}></Route>
 
-          <Route path='/admin/product/new' element={<NewProduct/>}></Route>
-          <Route path='/admin/product/:id' element={<ProductManagement/>}></Route>
-          <Route path='/admin/transaction/:id' element={<TransactionManagement/>}></Route>
+          <Route path="/admin/product/new" element={<NewProduct />}></Route>
+          <Route
+            path="/admin/product/:id"
+            element={<ProductManagement />}
+          ></Route>
+          <Route
+            path="/admin/transaction/:id"
+            element={<TransactionManagement />}
+          ></Route>
         </Routes>
       </Suspense>
     </Router>
-  )
+  );
 }
 
 export default App

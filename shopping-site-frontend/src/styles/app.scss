@@ -1,4 +1,7 @@
 @use "mixing";
+@use "home";
+@use "cart";
+@use "shipping";
 @use "dashboard";
 @use "product";
 @use "chart";
@@ -9,6 +12,9 @@
     font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
     line-height: 1.5;
     font-weight: 400;
+    &::-webkit-scrollbar{
+            display: none;
+        }
 }
 
 *{
@@ -20,6 +26,14 @@
 a{
     text-decoration: none;
     color: black;
+}
+
+$color1: white;
+$color2: rgb(46,46,46);
+$color3: rgb(0,104,136);
+
+body{
+    user-select: none;
 }
 
 .red{
@@ -37,6 +51,61 @@ a{
 .purple{
     color: purple;
 }
+
+
+.header{
+    @include mixing.flex(row,flex-end,strech,1rem);
+    >a{
+        color: $color2;
+        letter-spacing: 2px;
+        font-size: 1.2rem;
+
+        &:hover{
+            color: $color3;
+        }
+    }
+
+    >button{
+        border: none;
+        font-size: 1.2rem;
+        cursor: pointer;
+        background-color: transparent;
+        &:hover{
+            color:$color3;
+        }
+    }
+
+    >dialog{
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        padding: 10px;
+        width: 100px;
+        position: absolute;
+        left: calc(100% - 100px);
+        top: 8%;
+        >div{
+            @include mixing.flex(column,flex-start,center,0.25rem);
+        }
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 .admin-container{
     @include mixing.grid(1fr 4fr,2rem);
