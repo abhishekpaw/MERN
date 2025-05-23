@@ -61,8 +61,7 @@ function TableHOC <T>(columns: ColumnDef<T>[],data:T[],containerClassname: strin
             ))}
           </tbody>
         </table>
-        {
-          <div className="table-pagination">
+        { (table.getRowModel().rows.length > 6) && (<div className="table-pagination">
             <button
               onClick={() => table.previousPage()}
               disabled={!table.getCanPreviousPage()}
@@ -77,7 +76,8 @@ function TableHOC <T>(columns: ColumnDef<T>[],data:T[],containerClassname: strin
             >
               Next
             </button>
-          </div>
+          </div>)
+          
         }
       </div>
     );

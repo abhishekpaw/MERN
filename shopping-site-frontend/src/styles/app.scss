@@ -10,6 +10,7 @@
 @use "dashboardapp";
 @use "mediaquery";
 
+
 :root {
     font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
     line-height: 1.5;
@@ -54,6 +55,23 @@ body{
     color: purple;
 }
 
+.container{
+    max-width: 1367px;
+    width: 100%;
+    margin: auto;
+    overflow: auto;
+    >h1{
+        @include mixing.heading;
+        margin: 1rem 0;
+        text-align: left;
+    }
+}
+
+.heading{
+    @include mixing.heading;
+    margin: 1rem 0;
+    text-align: center;
+}
 
 .header{
     @include mixing.flex(row,flex-end,strech,1rem);
@@ -89,12 +107,6 @@ body{
             @include mixing.flex(column,flex-start,center,0.25rem);
         }
     }
-}
-
-.heading{
-    @include mixing.heading;
-    margin: 1rem 0;
-    text-align: center;
 }
 
 .admin-container{
