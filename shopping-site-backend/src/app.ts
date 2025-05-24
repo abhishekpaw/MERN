@@ -1,7 +1,8 @@
-import express from "express";
+import express, { Request,Response,NextFunction } from "express";
 
 import userRoute from "./routes/user.js"
 import { connectDB } from "./utils/feature.js";
+import { errorMiddleware } from "./middlewares/error.js";
 
 const port = 3000;
 
@@ -16,6 +17,8 @@ app.get("/",(req,res) =>{
 })
 
 app.use("/api/v1/user",userRoute);
+
+app.use(errorMiddleware);
 
 app.listen(port,()=>{
     console.log(`Express is working on https://localhost:${port}`);

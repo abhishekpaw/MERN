@@ -2,11 +2,14 @@ import { create } from "domain";
 import { Request,Response,NextFunction } from "express";
 import { User } from "../models/user.js";
 import { NewUserRequestBody } from "../types/types.js";
+import ErrorHandler from "../utils/utility-class.js";
+import { TryCatch } from "../middlewares/error.js";
+import { error } from "console";
 
-export const newUser = async (req:Request<{},{},NewUserRequestBody>,res:Response,next:NextFunction)=>{
-
-    try{
-        const{ name,_id,email,photo,gender,dob} = req.body;
+export const newUser = TryCatch(
+    async(req:Request<{},{},NewUserRequestBody>,res:Response,_next:NextFunction) => {
+        throw new Error("some error");
+            const{ name,_id,email,photo,gender,dob} = req.body;
 
         const user = await User.create({
           name,
@@ -21,12 +24,5 @@ export const newUser = async (req:Request<{},{},NewUserRequestBody>,res:Response
             success:true,
             message:`Welcome,${user.name}`,
         });
-    }catch(error){
-        res.status(400).json({
-            success:false,
-            message:error,
-        });
     }
-
-
-}
+);
