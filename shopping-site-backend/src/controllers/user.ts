@@ -1,10 +1,10 @@
-import { create } from "domain";
+
 import { Request,Response,NextFunction } from "express";
 import { User } from "../models/user.js";
 import { NewUserRequestBody } from "../types/types.js";
 import ErrorHandler from "../utils/utility-class.js";
 import { TryCatch } from "../middlewares/error.js";
-import { error } from "console";
+
 
 export const newUser = TryCatch(
   async (
