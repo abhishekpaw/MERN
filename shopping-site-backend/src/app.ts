@@ -6,10 +6,13 @@ import { errorMiddleware } from "./middlewares/error.js";
 //importing routes
 import userRoute from "./routes/user.js"
 import productRoute from "./routes/product.js"
+import NodeCache from "node-cache";
 
 const port = 3000;
 
 connectDB();
+
+export const myCache = new NodeCache();
 
 const app = express();
 
