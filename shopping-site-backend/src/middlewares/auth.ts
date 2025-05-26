@@ -13,7 +13,7 @@ export const adminOnly = TryCatch(async (req,res,next) => {
     
     if(!user) return next(new ErrorHandler("Invalid ID",401));
     
-    if(user.role !== "admin") return next(new ErrorHandler("This action is restricted",401));
+    if(user.role !== "admin") return next(new ErrorHandler("This action is restricted",403));
 
     next();
 })
