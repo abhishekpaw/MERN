@@ -9,3 +9,8 @@ for env
 
 npm i morgan 
 npm i --save-dev @types/morgan
+
+
+Stripe for Payment
+
+npm i stripe
