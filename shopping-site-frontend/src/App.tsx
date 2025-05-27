@@ -1,32 +1,33 @@
-import {BrowserRouter as Router,Routes,Route} from 'react-router-dom'
-import { lazy, Suspense } from 'react' 
-import Loader from './components/loader'
-import Header from './components/header'
+import {BrowserRouter as Router,Routes,Route} from 'react-router-dom';
+import { lazy, Suspense } from 'react' ;
+import Loader from './components/loader';
+import Header from './components/header';
+import {Toaster} from "react-hot-toast";
 
 
-const Home = lazy(() => import('./Pages/Home'))
-const Seacrh = lazy(() => import('./Pages/Search'))
-const Cart = lazy(() => import('./Pages/Cart'))
-const Shipping = lazy(() => import('./Pages/Shipping'))
-const Login = lazy(() => import('./Pages/Login'))
-const Orders = lazy(() => import('./Pages/Orders'))
-const OrderDetails = lazy(() => import('./Pages/Orderdetails'))
+const Home = lazy(() => import('./Pages/Home'));
+const Seacrh = lazy(() => import('./Pages/Search'));
+const Cart = lazy(() => import('./Pages/Cart'));
+const Shipping = lazy(() => import('./Pages/Shipping'));
+const Login = lazy(() => import('./Pages/Login'));
+const Orders = lazy(() => import('./Pages/Orders'));
+const OrderDetails = lazy(() => import('./Pages/Orderdetails'));
 
 
-const Dashboard = lazy(() => import('./Pages/Dashboard'))
-const Products = lazy(() => import('./Pages/Products')) 
-const Transaction = lazy(() => import('./Pages/Transaction'))
-const Customers = lazy(() => import('./Pages/Customers'))
-const NewProduct = lazy(() => import('./Pages/Management/NewProduct'))
-const ProductManagement = lazy(() => import('./Pages/Management/ProductManagement'))
-const TransactionManagement = lazy(() => import('./Pages/Management/TransactionManagement'))
-const BarCharts = lazy(() => import('./Pages/charts/BarCharts'))
-const LineCharts = lazy(() => import('./Pages/charts/LineCharts'))
-const PieCharts = lazy(() => import('./Pages/charts/PieCharts'))
+const Dashboard = lazy(() => import('./Pages/Dashboard'));
+const Products = lazy(() => import('./Pages/Products'));
+const Transaction = lazy(() => import('./Pages/Transaction'));
+const Customers = lazy(() => import('./Pages/Customers'));
+const NewProduct = lazy(() => import('./Pages/Management/NewProduct'));
+const ProductManagement = lazy(() => import('./Pages/Management/ProductManagement'));
+const TransactionManagement = lazy(() => import('./Pages/Management/TransactionManagement'));
+const BarCharts = lazy(() => import('./Pages/charts/BarCharts'));
+const LineCharts = lazy(() => import('./Pages/charts/LineCharts'));
+const PieCharts = lazy(() => import('./Pages/charts/PieCharts'));
 
-const StopWatch = lazy(() => import('./Pages/apps/Stopwatch'))
-const Coupon = lazy(() => import('./Pages/apps/Coupon'))
-const Toss = lazy(() => import('./Pages/apps/Toss'))
+const StopWatch = lazy(() => import('./Pages/apps/Stopwatch'));
+const Coupon = lazy(() => import('./Pages/apps/Coupon'));
+const Toss = lazy(() => import('./Pages/apps/Toss'));
 
 
 const App = () => {
@@ -74,6 +75,7 @@ const App = () => {
           ></Route>
         </Routes>
       </Suspense>
+      <Toaster position='bottom-center'/>  
     </Router>
   );
 }
