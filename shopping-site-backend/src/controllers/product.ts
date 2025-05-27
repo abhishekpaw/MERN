@@ -113,9 +113,7 @@ export const newProduct = TryCatch(
       photo: photo?.path,
     });
 
-    if (product?._id) {
-      await invalidCache({ product: true, productId: String(product._id) });
-    }
+      invalidCache({ product: true, admin:true });
     
     res.status(201).json({
       success: true,
@@ -151,7 +149,7 @@ export const updateProduct = TryCatch(async (req, res, next) => {
   }
 
   if(product?._id){
-    await invalidCache({ product: true, productId: String(product._id)});
+    invalidCache({ product: true, productId: String(product._id),admin:true});
   }
 
   res.status(200).json({
@@ -174,7 +172,7 @@ export const deleteProduct = TryCatch(async (req, res, next) => {
   await Product.deleteOne();
 
   if(product?._id){
-    await invalidCache({ product: true, productId: String(product._id)});
+    invalidCache({ product: true, productId: String(product._id),admin:true});
   }
 
 
