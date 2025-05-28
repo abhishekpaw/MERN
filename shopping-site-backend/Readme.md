@@ -14,3 +14,9 @@ npm i --save-dev @types/morgan
 Stripe for Payment
 
 npm i stripe
+
+Cors
+
+npm i cors
+
+npm i --save-dev @types/cors

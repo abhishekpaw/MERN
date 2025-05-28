@@ -5,6 +5,7 @@ import NodeCache from "node-cache";
 import morgan from "morgan";
 import { config } from "dotenv";
 import Stripe from "stripe";
+import cors from "cors";
 //importing routes
 import userRoute from "./routes/user.js";
 import productRoute from "./routes/product.js";
@@ -22,6 +23,8 @@ export const stripe = new Stripe(stripeKey);
 export const myCache = new NodeCache();
 const app = express();
 app.use(express.json());
+app.use(morgan("dev"));
+app.use(cors());
 app.get("/", (req, res) => {
     res.send("API is working with /api/v1");
 });
@@ -31,7 +34,6 @@ app.use("/api/v1/product", productRoute);
 app.use("/api/v1/order", orderRoute);
 app.use("/api/v1/payment", paymentRoute);
 app.use("/api/v1/dashboard", dashboardRoute);
-app.use(morgan("dev"));
 app.use("/uploads", express.static("uploads"));
 app.use(errorMiddleware);
 app.listen(port, () => {
