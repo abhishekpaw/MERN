@@ -82,6 +82,21 @@
         border-radius: 5px;
         box-shadow: 5px 5px 10px rgba(0,0,0,0.216);
 
+        .product-delete-btn {
+            position: absolute;
+            right: 8rem;
+            top: 4.5rem;
+            @include mixing.square(2.5rem);
+            @include mixing.flex(row, center, center, 0);
+            border-radius: 70%;
+            background-color: rgb(25, 21, 21);
+            color: white;
+    
+            &:hover {
+                opacity: 0.8;
+            }
+        }
+        
         >form{
             @include mixing.flex(column, unset, center, 2rem);
             >h2{

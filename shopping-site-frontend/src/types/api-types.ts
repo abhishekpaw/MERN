@@ -1,4 +1,13 @@
-import type { User } from "./types";
+import type { Product, User } from "./types";
+
+
+export type CustomError = {
+    status: number;
+    data: {
+        message: string;
+        success: boolean;
+    };
+};
 
 export type MessageResponse = {
     success: boolean;
@@ -8,4 +17,47 @@ export type MessageResponse = {
 export type UserResponse = {
     success: boolean;
     user: User;
+};
+
+export type CategoriesResponse = {
+    success: boolean;
+    categories: string[];
+};
+
+export type AllProductsResponse = {
+    success: boolean;
+    products: Product[];
+}; 
+
+export type SearchProductResponse = AllProductsResponse & {
+    totalPage: number;
+};
+
+export type SearchProductsRequest = {
+    price: number;
+    page: number;
+    category: string;
+    search: string;
+    sort: string;
+}
+
+export type ProductsResponse = {
+    success: boolean;
+    product: Product;
+};
+
+export type NewProductRequest = {
+    id: string;
+    formData: FormData;
+};
+
+export type UpdateProductRequest = {
+    userId: string;
+    productId: string;
+    formData: FormData;
+};
+
+export type DeleteProductRequest = {
+    userId: string;
+    productId: string;
 };

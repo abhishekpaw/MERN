@@ -18,6 +18,7 @@
         @include mixing.heading(1px);
         margin-top: 3rem;
         @include mixing.flex(row,space-between,center);
+        font-size: 1.5rem;
     }
 
     .findmore{
@@ -53,7 +54,7 @@
 
     img{    
         @include mixing.square(calc(15rem - 3rem));
-        //object-fit: cover;
+        object-fit: cover;
         margin: 1rem;
     }
 

@@ -19,7 +19,7 @@ app.get("/all",getAllProducts);
 app.get("/categories",getAllCategories);
 
 //To get all Products - /api/v1/product/admin-products
-app.get("/admin-products",getAdminProducts);
+app.get("/admin-products",adminOnly,getAdminProducts);
 
 //To get update,delete Product
 app.route("/:id").get(getSingleProduct).put(adminOnly,singleUpload,updateProduct).delete(adminOnly,deleteProduct)

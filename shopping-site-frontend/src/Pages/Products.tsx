@@ -1,9 +1,16 @@
-import { useMemo, useState, type ReactElement } from "react";
+import { useEffect, useMemo, useState, type ReactElement } from "react";
 import AdminSidebar from "../components/AdminSidebar";
 import TableHOC from "../components/TableHOC";
 import type { ColumnDef } from "@tanstack/react-table";
 import { Link } from "react-router-dom";
 import { FaPlus } from "react-icons/fa6";
+import { useAllProductsQuery } from "../redux/api/productAPI";
+import { server } from "../redux/store";
+import type { AllProductsResponse, CustomError } from "../types/api-types";
+import toast from "react-hot-toast";
+import { useSelector } from "react-redux";
+import type { UserReducerInitialState } from "../types/reducer-types";
+import { Skeleton } from "../components/loader";
 
 
 
@@ -15,34 +22,6 @@ interface DataType {
   action: ReactElement;
 }
 
-const img = "/src/assets/61IRRQ2gWPL.jpg";
-const img2 = "/src/assets/NIKE+QUEST+6.png";
-
-const arr: DataType[] =[
-  {
-    photo: <img height={34} src={img} alt="Product"/>,
-    name: "Lenovo ThinkPad T14s Gen 5",
-    price: 108087,
-    stock: 15,
-    action: <Link to="/admin/product/asdasdhj" className="manage-button">Manage</Link>,
-  },
-  {
-    photo: <img height={34} src={img2} alt="Product"/>,
-    name: "Nike Shoes",
-    price: 4,
-    stock: 300,
-    action: <Link to="/admin/product/sd" className="manage-button">Manage</Link>,
-  },
-  {
-    photo: <img height={34} src={img} alt="Product"/>,
-    name: "Lenovo ThinkPad T14s Gen 5",
-    price: 108087,
-    stock: 15,
-    action: <Link to="/admin/product/asdasdhj" className="manage-button">Manage</Link>,
-  },
-];
-
-
 
 const columns: ColumnDef<DataType>[] = [
   { accessorKey:"photo",cell: (_info) => _info.getValue(), header: "Photo",sortingFn: 'alphanumeric' },
@@ -53,13 +32,41 @@ const columns: ColumnDef<DataType>[] = [
 ];
 
 const Products = () => {
-  const [data] = useState<DataType[]>(arr);
-  const Table = useMemo(() => TableHOC<DataType>(columns, data, "dashboard-product-box", "Products"), [data]);
+
+  const {user} = useSelector(
+    (state: {userReducer: UserReducerInitialState}) => state.userReducer
+  );
+
+  const { isLoading,isError,error,data } = useAllProductsQuery(user?._id!);
+
+  const [rows, setRows] = useState<DataType[]>([]);
+
+  if(isError) {
+    const err = error as CustomError;
+    toast.error(err.data.message);
+  }
+    
+  
+  useEffect(() => {
+    if (data) {
+      setRows(
+        data.products.map((i) => ({
+          photo: <img src={`${server}/${i.photo}`} height={34} />,
+          name: i.name,
+          price: i.price,
+          stock: i.stock,
+          action: <Link to={`/admin/product/${i._id}`} className="manage-button">Manage</Link>,
+        }))
+      );
+    }
+  }, [data]);
+
+  const Table = TableHOC<DataType>(columns, rows, "dashboard-product-box", "Products")();
 
   return (
     <div className="admin-container">
       <AdminSidebar />
-      <main>{Table()}</main>
+      <main>{isLoading ? <Skeleton length={20}/> : Table}</main>
       <Link to="/admin/product/new" className="create-product-btn">
         <FaPlus/>
       </Link>
