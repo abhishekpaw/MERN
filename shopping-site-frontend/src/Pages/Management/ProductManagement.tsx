@@ -1,18 +1,14 @@
-import { useEffect, useState, type ChangeEvent, type FormEvent } from "react"
-import AdminSidebar from "../../components/AdminSidebar"
+import { useEffect, useState, type ChangeEvent, type FormEvent } from "react";
+import { FaTrash } from "react-icons/fa6";
 import { useSelector } from "react-redux";
-import type { UserReducerInitialState } from "../../types/reducer-types";
-import { useNavigate, useParams, type NavigateFunction } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+import AdminSidebar from "../../components/AdminSidebar";
+import { Skeleton } from "../../components/loader";
 import { useDeleteProductMutation, useProductDetailsQuery, useUpdateProductMutation } from "../../redux/api/productAPI";
 import { server } from "../../redux/store";
-import { Skeleton } from "../../components/loader";
-import type { SerializedError } from "@reduxjs/toolkit";
-import type { FetchBaseQueryError } from "@reduxjs/toolkit/query";
-import type { MessageResponse } from "../../types/api-types";
+import type { UserReducerInitialState } from "../../types/reducer-types";
 import { reponseToast } from "../../utils/feature";
-import { FaTrash } from "react-icons/fa6";
 
-const img = "/src/assets/NIKE+QUEST+6.png";
 
 const ProductManagement = () => {
 
