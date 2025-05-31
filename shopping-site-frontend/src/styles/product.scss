@@ -86,7 +86,7 @@
             position: absolute;
             right: 8rem;
             top: 4.5rem;
-            @include mixing.square(2.5rem);
+            @include mixing.square(2.8rem);
             @include mixing.flex(row, center, center, 0);
             border-radius: 70%;
             background-color: rgb(25, 21, 21);
@@ -140,6 +140,19 @@
 }
 
 .shipping-info-card {
+    .order-delete-btn {
+        position: absolute;
+        right: 8rem;
+        top: 2.5rem;
+        @include mixing.square(2.8rem);
+        @include mixing.flex(row, center, center, 0);
+        border-radius: 70%;
+        background-color: rgb(25, 21, 21);
+        color: white;    
+        &:hover {
+            opacity: 0.8;
+        }
+    }
     >h1{
         text-align: center;
         @include mixing.heading(2px);

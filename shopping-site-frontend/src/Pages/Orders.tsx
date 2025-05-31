@@ -1,7 +1,13 @@
-import { useState, type ReactElement } from "react";
-import TableHOC from "../components/TableHOC";
 import type { ColumnDef } from "@tanstack/react-table";
+import { useEffect, useState, type ReactElement } from "react";
+import toast from "react-hot-toast";
+import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import { Skeleton } from "../components/loader";
+import TableHOC from "../components/TableHOC";
+import { useMyOrdersQuery } from "../redux/api/orderAPI";
+import type { CustomError } from "../types/api-types";
+import type { UserReducerInitialState } from "../types/reducer-types";
 
 type DataType = {
     _id:string;
@@ -22,26 +28,45 @@ const column: ColumnDef<DataType>[] = [
 ];
 
 const Orders = () => {
-  const [row] = useState<DataType[]>([
-    {
-      _id: "asasdasdasd",
-      amount: 45454,
-      quantity: 23,
-      discount: 5666,
-      status: <span className="red">Processing</span>,
-      action: <Link to={`/order/asasdasdasd`} className="manage-button">View</Link>,
-    },
-  ]);
+
+    const {user} = useSelector(
+      (state: {userReducer: UserReducerInitialState}) => state.userReducer
+    );
+    
+    const { isLoading,data,isError,error, } = useMyOrdersQuery(user?._id!);
+    
+  const [rows,setRows] = useState<DataType[]>([]);
+
+    if(isError) {
+        const err = error as CustomError;
+        toast.error(err.data.message);
+    }
+  
+    useEffect(() => {
+      if (data) {
+        setRows(
+          data.orders.map((i) => ({
+            _id: i._id,
+            amount: i.total,
+            discount: i.discount,
+            quantity: i.orderItems.length,
+            status: <span className={i.status === "Processing" ? "red" : i.status === "Shipped" ? "green" : "purple"}>{i.status}</span>,
+            action: <Link to={`/admin/transaction/${i._id}`} className="manage-button">Manage</Link>,
+          }))
+        );
+      }
+    }, [data]);
+
   const Table = TableHOC<DataType>(
     column,
-    row,
+    rows,
     "dashboard-product-box",
     "Orders",
   )();
   return (
     <div className="container">
       <h1>My Orders</h1>
-      {Table}
+      {isLoading ? <Skeleton length={20}/> : Table}
     </div>
   );
 };

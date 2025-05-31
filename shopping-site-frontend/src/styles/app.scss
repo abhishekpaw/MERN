@@ -109,6 +109,14 @@ body{
     }
 }
 
+.container{
+    height: 80vh;
+    @include mixing.flex(column);
+    > svg {
+        font-size: 5rem;
+    }
+}
+
 .admin-container{
     @include mixing.grid(1fr 4fr,2rem);
     height: 100vh;

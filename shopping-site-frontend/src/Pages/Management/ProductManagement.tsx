@@ -1,7 +1,7 @@
 import { useEffect, useState, type ChangeEvent, type FormEvent } from "react";
 import { FaTrash } from "react-icons/fa6";
 import { useSelector } from "react-redux";
-import { useNavigate, useParams } from "react-router-dom";
+import { Navigate, useNavigate, useParams } from "react-router-dom";
 import AdminSidebar from "../../components/AdminSidebar";
 import { Skeleton } from "../../components/loader";
 import { useDeleteProductMutation, useProductDetailsQuery, useUpdateProductMutation } from "../../redux/api/productAPI";
@@ -19,7 +19,7 @@ const ProductManagement = () => {
         const params = useParams();
         const navigate = useNavigate();
         
-        const { data,isLoading} = useProductDetailsQuery(params.id!);
+        const { data,isLoading,isError} = useProductDetailsQuery(params.id!);
         const {price,photo,name,stock,category} = data?.product || {_id:"",photo:"", category:"",name:"",stock:0,price:0};
 
 
@@ -91,6 +91,8 @@ const ProductManagement = () => {
 
       }
     },[data]);
+
+    if(isError) return <Navigate to={"/404"}/>;
 
   return (
     <div className="admin-container">

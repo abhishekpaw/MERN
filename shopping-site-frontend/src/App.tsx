@@ -11,7 +11,6 @@ import { getUser } from './redux/api/userAPI';
 import type { UserReducerInitialState } from './types/reducer-types';
 import ProtectedRoute from './components/protected-route';
 
-
 const Home = lazy(() => import('./Pages/Home'));
 const Seacrh = lazy(() => import('./Pages/Search'));
 const Cart = lazy(() => import('./Pages/Cart'));
@@ -35,6 +34,8 @@ const PieCharts = lazy(() => import('./Pages/charts/PieCharts'));
 const StopWatch = lazy(() => import('./Pages/apps/Stopwatch'));
 const Coupon = lazy(() => import('./Pages/apps/Coupon'));
 const Toss = lazy(() => import('./Pages/apps/Toss'));
+
+const NotFound = lazy(() => import('./Pages/NotFound'));
 
 
 const App = () => {
@@ -111,6 +112,8 @@ const App = () => {
               element={<TransactionManagement />}
             ></Route>
           </Route>
+
+          <Route path="*" element={<NotFound/>}/>
         </Routes>
       </Suspense>
       <Toaster position="bottom-center" />
