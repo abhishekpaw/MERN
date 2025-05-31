@@ -107,6 +107,7 @@ const Search = () => {
           <div className="search-product-list">
             {searchData?.products.map((i) => (
               <ProductCard
+                key={i._id}
                 productId={i._id}
                 photo={i.photo}
                 name={i.name}
