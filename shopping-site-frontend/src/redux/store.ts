@@ -21,3 +21,6 @@ export const store = configureStore({
       serializableCheck: false,
     }).concat(userAPI.middleware,productAPI.middleware,orderAPI.middleware),
 });
+
+
+export type RootState = ReturnType<typeof store.getState>;

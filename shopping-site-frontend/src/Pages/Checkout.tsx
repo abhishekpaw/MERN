@@ -1,16 +1,13 @@
-import { PaymentElement, useElements, useStripe} from '@stripe/react-stripe-js';
+import { Elements, PaymentElement, useElements, useStripe } from '@stripe/react-stripe-js';
 import { loadStripe } from '@stripe/stripe-js';
-import { Elements } from "@stripe/react-stripe-js";
 import { useState, type FormEvent } from 'react';
 import toast from 'react-hot-toast';
-import { Navigate, useLocation, useNavigate, type NavigateFunction } from 'react-router-dom';
-import type { MessageResponse, NewOrderRequest } from '../types/api-types';
 import { useDispatch, useSelector } from 'react-redux';
-import type { CartReducerInitialState, UserReducerInitialState } from '../types/reducer-types';
+import { Navigate, useLocation, useNavigate } from 'react-router-dom';
 import { useNewOrderMutation } from '../redux/api/orderAPI';
 import { resetCart } from '../redux/reducer/cartReducer';
-import type { SerializedError } from '@reduxjs/toolkit';
-import type { FetchBaseQueryError } from '@reduxjs/toolkit/query';
+import type { RootState } from '../redux/store';
+import type { NewOrderRequest } from '../types/api-types';
 import { reponseToast } from '../utils/feature';
 
 
@@ -24,10 +21,10 @@ const CheckOutForm = () => {
     const dispatch = useDispatch();
 
     const {user} = useSelector(
-    (state: {userReducer: UserReducerInitialState}) => state.userReducer
+    (state: RootState) => state.userReducer
   );
 
-      const {shippingInfo,cartItems,subtotal,tax,discount,shippingCharges,total} = useSelector((state: {cartReducer: CartReducerInitialState}) => state.cartReducer);
+      const {shippingInfo,cartItems,subtotal,tax,discount,shippingCharges,total} = useSelector((state: RootState) => state.cartReducer);
   
     const [isProcessing,setIsProcessing] = useState<boolean>(false);
 
