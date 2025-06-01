@@ -117,6 +117,21 @@ body{
     }
 }
 
+.checkout-container{
+    max-width: 400px;
+    width: 100%;
+    margin: auto;
+    >form{
+        @include mixing.flex(column,flex-start,stretch,2rem);
+
+        >button{
+            @include mixing.btn(1rem,rgb(0,104,136),white);
+            width: 100%;
+            font-size: 1.1rem;
+        }
+    }
+}
+
 .admin-container{
     @include mixing.grid(1fr 4fr,2rem);
     height: 100vh;

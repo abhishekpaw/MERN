@@ -17,6 +17,7 @@ const Cart = lazy(() => import('./Pages/Cart'));
 const Shipping = lazy(() => import('./Pages/Shipping'));
 const Login = lazy(() => import('./Pages/Login'));
 const Orders = lazy(() => import('./Pages/Orders'));
+const Checkout = lazy(() => import( './Pages/Checkout'));
 const OrderDetails = lazy(() => import('./Pages/Orderdetails'));
 
 
@@ -86,6 +87,7 @@ const App = () => {
             <Route path="/shipping" element={<Shipping />} />
             <Route path="/orders" element={<Orders />} />
             <Route path="/orders" element={<OrderDetails />} />
+            <Route path="/pay" element={<Checkout />} />
           </Route>
 
           <Route element={<ProtectedRoute isAuthenticated={true} adminOnly={true} admin={user?.role === "admin" ? true : false}/>}>
