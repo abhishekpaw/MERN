@@ -84,7 +84,7 @@ export const getInventories = async({categories,productsCount,}: {categories: st
 };
 
 
-interface MyDocument extends Document { 
+interface MyDocument { 
     createdAt: any;
     discount?: number;
     total?: number;

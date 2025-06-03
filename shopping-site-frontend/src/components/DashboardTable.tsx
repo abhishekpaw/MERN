@@ -1,11 +1,11 @@
-import { createColumnHelper,  type Column,  type ColumnDef } from "@tanstack/react-table"
-import TableHOC from "./TableHOC"
-const columnHelper = createColumnHelper();
+import { type ColumnDef } from "@tanstack/react-table";
+import TableHOC from "./TableHOC";
+
 
 
  
 const columns:ColumnDef<DataType>[]= [
-  {accessorKey:"id",
+  {accessorKey:"_id",
     header:"ID"
   },
   {accessorKey:"quantity",
@@ -23,7 +23,7 @@ const columns:ColumnDef<DataType>[]= [
 ]
 
 interface DataType{
-  id:string;
+  _id:string;
   quantity:number;
   discount:number;
   amount:number;

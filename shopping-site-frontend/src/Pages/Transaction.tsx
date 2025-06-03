@@ -8,7 +8,6 @@ import { Skeleton } from "../components/loader";
 import TableHOC from "../components/TableHOC";
 import { useAllOrdersQuery } from "../redux/api/orderAPI";
 import type { CustomError } from "../types/api-types";
-import type { UserReducerInitialState } from "../types/reducer-types";
 import type { RootState } from "../redux/store";
 
 interface DataType {
