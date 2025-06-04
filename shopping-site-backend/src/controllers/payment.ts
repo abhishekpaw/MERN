@@ -1,17 +1,54 @@
 import { stripe } from "../app.js";
 import { TryCatch } from "../middlewares/error.js";
 import { Coupon } from "../models/coupon.js";
+import { Product } from "../models/product.js";
+import { User } from "../models/user.js";
+import { orderItemType, ShippingInfoType } from "../types/types.js";
 import ErrorHandler from "../utils/utility-class.js";
 
 export const createPaymentIntent = TryCatch(async(req,res,next) => {
 
-    const { amount} = req.body;
+    const {id} = req.query;
 
-    if(!amount){
-        return next(new ErrorHandler("Please enter amount",400));
-    }
+    const user = await User.findById(id).select("name");
 
-    const paymentIntent = await stripe.paymentIntents.create({amount:Number(amount) * 100,currency:"INR",});
+    if(!user) return next(new ErrorHandler("Please login first",401));
+
+    const {items,shippingInfo,}: {items: orderItemType[];shippingInfo:ShippingInfoType;} = req.body;
+
+    if(!items) return next(new ErrorHandler("Please Send Items",400));
+
+    const productIDs = items.map((item) => item.productId);
+
+    const products = await Product.find({ _id: { $in: productIDs},});
+
+    const subtotal = products.reduce((prev,curr) => {
+      const item = items.find((i) => i.productId === curr._id.toString());
+      if(!item) return prev;
+      return curr.price * item.quantity + prev;
+    },0);
+
+    const tax = subtotal * 0.18;
+
+    const shipping = subtotal > 1000 ? 0 : 200;
+
+    const total = Math.floor(subtotal + tax + shipping);
+
+    const paymentIntent = await stripe.paymentIntents.create({
+      amount: total * 100,
+      currency: "inr",
+      description: "MERN Shopping",
+      shipping: {
+        name: user.name,
+        address: {
+          line1: shippingInfo.address,
+          postal_code: shippingInfo.pincode.toString(),
+          city: shippingInfo.city,
+          state: shippingInfo.state,
+          country: shippingInfo.country,  
+        },
+      },
+    });
 
     res.status(201).json({
       success: true,

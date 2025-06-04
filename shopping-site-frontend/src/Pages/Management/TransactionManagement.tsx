@@ -15,7 +15,7 @@ const defaultdata: Order = {
     city: "",
     country: "",
     state: "",
-    pinCode: "",
+    pincode: Number(0),
   },
   status: "",
   subtotal: 0,
@@ -42,7 +42,7 @@ const TransactionManagement = () => {
   const { isLoading, data, isError, error } = useOrderDetailsQuery(params.id!);
 
   const {
-    shippingInfo: { address, city, state, country, pinCode },
+    shippingInfo: { address, city, state, country, pincode },
     orderItems,
     user: { name },
     status,
@@ -102,7 +102,7 @@ const TransactionManagement = () => {
               <h5>User Info</h5>
               <p>Name: {name}</p>
               <p>
-                Address: {`${address},${city},${state},${country},${pinCode}`}
+                Address: {`${address},${city},${state},${country},${pincode}`}
               </p>
 
               <h5>Amount Info</h5>
