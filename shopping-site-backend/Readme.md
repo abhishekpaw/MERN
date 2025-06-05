@@ -41,3 +41,7 @@ Cors
 npm i cors
 
 npm i --save-dev @types/cors
+
+nodemon
+
+npm i --save tsx

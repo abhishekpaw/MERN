@@ -1,13 +1,13 @@
 {
   "name": "shopping-site-backend",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "./dist/app.js",
   "type": "module",
   "scripts": {
     "start": "node dist/app.js",
     "build": "tsc",
     "watch": "tsc -w",
-    "dev": "nodemon dist/app.js"
+    "dev": "npx tsx watch src/app.ts"
   },
   "author": "",
   "license": "ISC",
@@ -21,6 +21,7 @@
     "multer": "^2.0.0",
     "node-cache": "^5.1.2",
     "stripe": "^18.1.1",
+    "tsx": "^4.19.4",
     "uuid": "^11.1.0",
     "validator": "^13.15.0"
   },
@@ -33,7 +34,6 @@
     "@types/node": "^22.15.21",
     "@types/uuid": "^10.0.0",
     "@types/validator": "^13.15.1",
-    "nodemon": "^3.1.10",
     "typescript": "^5.8.3"
   }
 }
