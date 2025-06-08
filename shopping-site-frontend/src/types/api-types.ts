@@ -1,4 +1,4 @@
-import type { Bar, CartItem, Line, Order, Pie, Product, shippingInfo, Stats, User } from "./types";
+import type { Bar, CartItem, CouponType, Line, Order, Pie, Product, shippingInfo, Stats, User } from "./types";
 
 
 export type CustomError = {
@@ -121,5 +121,13 @@ export type DeleteUserRequest = {
     adminUserId: string;
 }
 
+export type AllDiscountResponse = {
+success: boolean;
+coupons: CouponType[];
+};
 
+export type SingleDiscountResponse = {
+success: boolean;
+coupons: CouponType[];
+};
 

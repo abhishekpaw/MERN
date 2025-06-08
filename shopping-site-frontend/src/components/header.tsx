@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   FaSearch,
   FaShoppingBag,
@@ -19,6 +19,7 @@ interface PropsType {
 const Header = ({user} : PropsType) => {
 
   const[isOpen,setIsOpen] = useState<boolean>(false);
+  
   const logoutHandler = async () => {
     try {
       await signOut(auth);
@@ -28,6 +29,19 @@ const Header = ({user} : PropsType) => {
       toast.error("Sign Out Failed");
     }
   };
+
+  useEffect(() => { 
+    const handleClickOutside = (event: MouseEvent) => {
+      const dialog = document.querySelector("dialog");
+      if (dialog && !dialog.contains(event.target as Node)) {
+        setIsOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  },[]);
   
   return (
     <nav className="header">
@@ -57,7 +71,7 @@ const Header = ({user} : PropsType) => {
             </div>
           </dialog>
         </>
-      ) : (
+      ) : (        
         <Link to={"/login"}>
           <FaSignInAlt />
         </Link>

@@ -2,6 +2,51 @@ import mongoose, { Date } from "mongoose";
 import { myCache } from "../app.js";
 import { Product } from "../models/product.js";
 import { InvalidCacheProps, orderItemType } from "../types/types.js";
+import { v2 as cloudinary, UploadApiResponse } from "cloudinary";
+import { get } from "http";
+
+
+const getBase64 = (file: Express.Multer.File) => {
+    return `data:${file.mimetype};base64,${file.buffer.toString("base64")}`;
+}
+export const uploadToCloudinary = async (files: Express.Multer.File[]) => {
+    const promises = files.map(
+        (file) =>
+            new Promise<UploadApiResponse>((resolve, reject) => {
+                cloudinary.uploader.upload(getBase64(file), (error, result) => {
+                    if (error || !result) {
+                        reject(error || new Error("No result returned from Cloudinary"));
+                    } else {
+                        resolve(result);
+                    }
+                });
+            })
+    );
+
+    const results = await Promise.all(promises);
+
+    return results.map((i) => ({
+        public_id: i.public_id,
+        url: i.secure_url,
+    }));
+};
+
+export const deleteFromCloudinary = async (publicIds: string[]) => {
+    const promises = publicIds.map((id) => {
+      return new Promise<void>((resolve, reject) => {
+        cloudinary.uploader.destroy(id, (error, result) => {
+          if (error) {
+            reject(error);
+            console.error(`Error deleting ${id} from Cloudinary:`, error);
+          } else {
+            console.log(`Deleted ${id} from Cloudinary`);
+            resolve();
+          }
+        });
+      });
+    });
+    await Promise.all(promises);
+};
 
 export const connectDB = (uri: string) =>{
     mongoose.connect(uri,{

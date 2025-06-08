@@ -11,8 +11,9 @@ import { getUser } from './redux/api/userAPI';
 import type { UserReducerInitialState } from './types/reducer-types';
 import ProtectedRoute from './components/protected-route';
 
-const Home = lazy(() => import('./Pages/Home'));
+const Home = lazy(() => import('./Pages/home'));
 const Seacrh = lazy(() => import('./Pages/Search'));
+const ProductDetails = lazy(() => import('./Pages/product-details'));
 const Cart = lazy(() => import('./Pages/Cart'));
 const Shipping = lazy(() => import('./Pages/Shipping'));
 const Login = lazy(() => import('./Pages/Login'));
@@ -28,6 +29,9 @@ const Customers = lazy(() => import('./Pages/Customers'));
 const NewProduct = lazy(() => import('./Pages/Management/NewProduct'));
 const ProductManagement = lazy(() => import('./Pages/Management/ProductManagement'));
 const TransactionManagement = lazy(() => import('./Pages/Management/TransactionManagement'));
+const DiscountManagement = lazy(() => import('./Pages/Management/discountmanage'));
+const Discount = lazy(() => import('./Pages/discount'));
+
 const BarCharts = lazy(() => import('./Pages/charts/BarCharts'));
 const LineCharts = lazy(() => import('./Pages/charts/LineCharts'));
 const PieCharts = lazy(() => import('./Pages/charts/PieCharts'));
@@ -68,6 +72,7 @@ const App = () => {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/search" element={<Seacrh />} />
+          <Route path="/product/:id" element={<ProductDetails />} />
           <Route path="/cart" element={<Cart />} />
 
           <Route>
@@ -95,6 +100,7 @@ const App = () => {
             <Route path="/admin/product" element={<Products />}></Route>
             <Route path="/admin/customer" element={<Customers />}></Route>
             <Route path="/admin/transaction" element={<Transaction />}></Route>
+            <Route path="/admin/discount" element={<Discount />}></Route>
 
             <Route path="/admin/chart/bar" element={<BarCharts />}></Route>
             <Route path="/admin/chart/pie" element={<PieCharts />}></Route>
@@ -112,6 +118,10 @@ const App = () => {
             <Route
               path="/admin/transaction/:id"
               element={<TransactionManagement />}
+            ></Route>
+            <Route
+              path="/admin/discount/:id"
+              element={<DiscountManagement />}
             ></Route>
           </Route>
 

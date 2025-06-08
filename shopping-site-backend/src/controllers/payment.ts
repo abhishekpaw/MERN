@@ -58,17 +58,17 @@ export const createPaymentIntent = TryCatch(async(req,res,next) => {
 
 export const newCoupon = TryCatch(async(req,res,next) => {
 
-    const { coupon, amount} = req.body;
+    const { code, amount} = req.body;
 
-    if(!coupon || !amount){
+    if(!code || !amount){
         return next(new ErrorHandler("Please enter both coupon and amount",400));
     }
     
-    await Coupon.create({code: coupon,amount});
+    await Coupon.create({code: code,amount});
 
     res.status(201).json({
       success: true,
-      message: `Coupon ${coupon} Created Successfully.`,
+      message: `Coupon ${code} Created Successfully.`,
     });
 });
 
@@ -95,6 +95,49 @@ export const allCoupons = TryCatch(async(req,res,next) => {
     res.status(200).json({
       success: true,
       coupons,
+    });
+});
+
+export const getCoupon = TryCatch(async(req,res,next) => {
+
+    const {id} = req.params;
+
+    const coupon = await Coupon.findById(id);
+
+    if(!coupon){
+        return next(new ErrorHandler("Invalid Coupon Code",400));
+    }
+
+    res.status(200).json({
+      success: true,
+      coupon,
+    });
+});
+
+export const updateCoupon = TryCatch(async(req,res,next) => {
+
+    const {id} = req.params;
+
+    const { code, amount} = req.body;
+
+    const coupon = await Coupon.findById(id);
+
+    if(!coupon){
+        return next(new ErrorHandler("Invalid Coupon Code",400));
+    }
+
+    if(!code || !amount){
+        return next(new ErrorHandler("Please enter both code and amount",400));
+    }
+
+    if(code) coupon.code = code;
+    if(amount) coupon.amount = amount;
+
+    await coupon.save();
+
+    res.status(200).json({
+      success: true,
+      meassage:`Coupon ${coupon.code} Updated Successfully`,
     });
 });
 

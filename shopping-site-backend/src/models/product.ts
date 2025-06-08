@@ -1,15 +1,23 @@
 import mongoose from "mongoose";
 
 const schema = new mongoose.Schema(
-  {    
+  {
     name: {
       type: String,
       required: [true, "Please Enter Name"],
     },
-    photo: {
-      type: String,
-      required: [true, "Please Enter Photo"],
-    },
+    photos: [
+      {
+        public_id: {
+          type: String,
+          required: [true, "Please Enter Public ID"],
+        },
+        url: {
+          type: String,
+          required: [true, "Please Enter URL"],
+        },
+      },
+    ],
     price: {
       type: Number,
       required: [true, "Please Enter Price"],
@@ -22,6 +30,14 @@ const schema = new mongoose.Schema(
       type: String,
       required: [true, "Please Enter Category"],
       trim: true,
+    },
+    description: {
+      type: String,
+      required: [true, "Please Enter Description"],
+    },
+    ratings: {
+      type: Number,
+      default: 0,
     },
   },
   {

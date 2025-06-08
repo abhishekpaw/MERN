@@ -7,6 +7,7 @@ import morgan from "morgan";
 import { config } from "dotenv";
 import Stripe from "stripe";
 import cors from "cors";
+import {v2 as cloudinary} from "cloudinary";
 
 //importing routes
 import userRoute from "./routes/user.js";
@@ -14,8 +15,6 @@ import productRoute from "./routes/product.js";
 import orderRoute from "./routes/order.js";
 import paymentRoute from "./routes/payment.js";
 import dashboardRoute from "./routes/stats.js";
-
-
 
 
 config({
@@ -28,6 +27,13 @@ const stripeKey = process.env.STRIPE_KEY || "";
 
 connectDB(mongoURI);
 
+//Configuring cloudinary
+cloudinary.config({
+    cloud_name: process.env.CLOUD_NAME,
+    api_key: process.env.CLOUD_API_KEY,
+    api_secret: process.env.CLOUD_API_SECRET,
+});
+
 export const stripe = new Stripe(stripeKey);
 export const myCache = new NodeCache();
 
@@ -35,7 +41,11 @@ const app = express();
 
 app.use(express.json());
 app.use(morgan("dev"));
-app.use(cors());
+app.use(cors({
+    origin: [process.env.CLIENT_URL!],
+    methods: ["GET", "POST", "PUT", "DELETE", "PATCH"],
+    credentials: true,
+}));
 
 app.get("/",(req,res) =>{
     res.send("API is working with /api/v1");

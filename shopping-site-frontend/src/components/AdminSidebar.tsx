@@ -6,6 +6,7 @@ import type { IconType } from "react-icons";
 import { FaChartBar, FaChartLine, FaChartPie, FaGamepad, FaStopwatch } from "react-icons/fa6";
 import { useEffect, useState } from "react";
 import { HiMenuAlt4 } from "react-icons/hi";
+import { MdDiscount } from "react-icons/md";
 
 const AdminSidebar = () => {
   const location = useLocation();
@@ -75,6 +76,7 @@ const DivOne = ({location}: {location:Location}) =>(
             <Li url="/admin/product" text="Products" location={location} Icon={RiShoppingBag3Fill}/>
             <Li url="/admin/customer" text="Customer" location={location} Icon={IoIosPeople}/>
             <Li url="/admin/transaction" text="Transaction" location={location} Icon={AiFillFileText}/>
+            <Li url="/admin/discount" text="Discount" location={location} Icon={MdDiscount}/>
         </ul>
       </div>
 )

@@ -72,7 +72,7 @@
         background-color: #0000006b;
         @include mixing.flex;
         //background-color: white;
-        button{
+        button,a{
             @include mixing.flex;
             @include mixing.square(3rem);
             border-radius: 100%;
