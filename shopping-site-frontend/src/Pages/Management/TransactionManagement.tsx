@@ -88,7 +88,7 @@ const TransactionManagement = () => {
               {orderItems.map((i) => (
                 <ProductCard
                   name={i.name}
-                  photo={`${server}/${i.photo}`}
+                  photo={i.photo}
                   _id={i._id}
                   quantity={i.quantity}
                   price={i.price}
@@ -144,7 +144,7 @@ const ProductCard = ({ name , photo, price,quantity, _id}: OrderItemType) =>{
       <img src={photo} alt={name} />
       <Link to={`/product/${_id}`}>{name}</Link>
       <span>
-        ${price} X {quantity} = ${price * quantity}
+        ₹{price} X {quantity} = ₹{price * quantity}
       </span>
     </div>
   );

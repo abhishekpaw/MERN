@@ -135,7 +135,7 @@ const WidgetItem = ({heading,value,percent,color,amount=false}:WidgetItemProps) 
 <article className="widget">
   <div className="widget-info">
     <p>{heading}</p>
-    <h4>{amount? `$${value}` : value}</h4>
+    <h4>{amount? `₹${value}` : value}</h4>
     {percent > 0 ? (<span className="green"><HiTrendingUp/> +{`${percent > 10000 ? 9999 : percent}%`}</span>) : (<span className="red"><HiTrendingDown/>{`${percent < -10000 ? -9999 : percent}%`}</span>)}
   </div>
 
