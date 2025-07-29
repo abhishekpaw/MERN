@@ -1,11 +1,12 @@
 import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
-import { useState } from "react"
+import { useEffect,useState } from "react"
 import toast from "react-hot-toast";
 import { FcGoogle } from "react-icons/fc";
 import { auth } from "../firebase";
 import { useLoginMutation } from "../redux/api/userAPI";
 import type { FetchBaseQueryError } from "@reduxjs/toolkit/query/react";
 import type { MessageResponse } from "../types/api-types";
+
 
 const Login = () => {
 
@@ -44,6 +45,20 @@ const Login = () => {
        toast.error("Sign In Failed");
     }
   }
+
+  useEffect(() => {
+    const handleMessage = (event: MessageEvent) => {
+      if (event.data.type === "google-auth-success") {
+        const user = event.data.payload;
+        console.log("Received user from popup:", user);
+        // Trigger login, set token, etc.
+      }
+    };
+
+    window.addEventListener("message", handleMessage);
+
+    return () => window.removeEventListener("message", handleMessage);
+  }, []);
 
   return (
     <div className="login">
