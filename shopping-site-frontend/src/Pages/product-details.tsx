@@ -15,7 +15,7 @@ const ProductDetails = () => {
         const dispatch = useDispatch();
 
     const params = useParams();
-    const{isLoading,isError,error,data} = useProductDetailsQuery(params.id!);
+    const{isLoading,isError,data} = useProductDetailsQuery(params.id!);
 
     const[carouselOpen,setCarouselOpen] = useState(false);
           const[quantity,setQuantity] = useState(0);  
