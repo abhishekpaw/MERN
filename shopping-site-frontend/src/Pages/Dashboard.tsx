@@ -1,9 +1,9 @@
-import toast from "react-hot-toast";
 import { BiMaleFemale } from "react-icons/bi";
 import { BsSearch } from "react-icons/bs";
 import { FaRegBell } from "react-icons/fa6";
 import { HiTrendingDown, HiTrendingUp } from "react-icons/hi";
 import { useSelector } from "react-redux";
+import { Navigate } from "react-router-dom";
 import userimg from "../assets/male_user.png";
 import AdminSidebar from "../components/AdminSidebar";
 import { BarChart, DoughnutChart } from "../components/Charts";
@@ -11,7 +11,6 @@ import Table from "../components/DashboardTable";
 import { Skeleton } from "../components/loader";
 import { useStatsQuery } from "../redux/api/dashboardAPI";
 import type { RootState } from "../redux/store";
-import { Navigate } from "react-router-dom";
 
 const Dashboard = () => {
     const { user } = useSelector((state: RootState) => state.userReducer);

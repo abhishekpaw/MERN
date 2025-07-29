@@ -1,4 +1,3 @@
-import type { ReactElement } from "react";
 
 export type User = {
   name: string;

@@ -1,6 +1,5 @@
 import { FaTrash } from "react-icons/fa6";
 import { Link } from "react-router-dom";
-import { server } from "../redux/store";
 import type { CartItem } from "../types/types";
 
 type cartItemProps = {

@@ -1,12 +1,11 @@
-import { useEffect, useState, type ChangeEvent, type FormEvent } from "react"
+import axios from "axios";
+import { useEffect, useState, type ChangeEvent, type FormEvent } from "react";
+import toast from "react-hot-toast";
 import { BiArrowBack } from "react-icons/bi";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
-import { server, type RootState } from "../redux/store";
-import toast from "react-hot-toast";
 import { saveShippingInfo } from "../redux/reducer/cartReducer";
-import type { CartItem } from "../types/types";
+import { server, type RootState } from "../redux/store";
 
 const Shipping = () => {
 

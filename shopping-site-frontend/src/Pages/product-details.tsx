@@ -1,14 +1,14 @@
-import { Navigate, useParams } from "react-router-dom"
-import { useProductDetailsQuery } from "../redux/api/productAPI"
-import { Skeleton } from "../components/loader";
 import { MyntraCarousel, Slider, type CarouselButtonType } from "6pp";
 import { useState } from "react";
-import { FaArrowAltCircleLeft, FaArrowAltCircleRight, FaArrowCircleLeft, FaArrowCircleRight } from "react-icons/fa";
-import RatingsComponent from "../components/ratings";
 import toast from "react-hot-toast";
-import type { CartItem } from "../types/types";
+import { FaArrowCircleLeft, FaArrowCircleRight } from "react-icons/fa";
 import { useDispatch } from "react-redux";
+import { Navigate, useParams } from "react-router-dom";
+import { Skeleton } from "../components/loader";
+import RatingsComponent from "../components/ratings";
+import { useProductDetailsQuery } from "../redux/api/productAPI";
 import { addToCart } from "../redux/reducer/cartReducer";
+import type { CartItem } from "../types/types";
 
 const ProductDetails = () => {
 

@@ -8,7 +8,6 @@ import type { OrderItemType } from "../../types";
 import type { UserReducerInitialState } from "../../types/reducer-types";
 import type { Order } from "../../types/types";
 import { reponseToast } from "../../utils/feature";
-import { server } from "../../redux/store";
 
 const defaultdata: Order = {
   shippingInfo: {

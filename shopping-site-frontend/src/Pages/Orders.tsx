@@ -6,9 +6,8 @@ import { Link } from "react-router-dom";
 import { Skeleton } from "../components/loader";
 import TableHOC from "../components/TableHOC";
 import { useMyOrdersQuery } from "../redux/api/orderAPI";
-import type { CustomError } from "../types/api-types";
-import type { UserReducerInitialState } from "../types/reducer-types";
 import type { RootState } from "../redux/store";
+import type { CustomError } from "../types/api-types";
 
 type DataType = {
     _id:string;
