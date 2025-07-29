@@ -48,13 +48,15 @@ export const deleteFromCloudinary = async (publicIds: string[]) => {
     await Promise.all(promises);
 };
 
-export const connectDB = (uri: string) =>{
-    mongoose.connect(uri,{
-        dbName: "shopping-cart",
-    })
-    .then(c=>console.log(`DB Connected${c.connection.host}`))
-    .catch(e=>console.log(e));
+export const connectDB = async(uri: string) =>{
+    try{
+        const conn = await mongoose.connect(uri);
+        console.log(`MongoDB connected: ${conn.connection.host}`);
+    }catch(error){
+        console.log("MongoDB connection error:",error);
+    }
 }
+
 
 export const invalidCache = ({product,order,admin,userId,orderId,productId}:InvalidCacheProps) =>{
     if(product){
