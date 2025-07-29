@@ -13,7 +13,7 @@ import ProtectedRoute from './components/protected-route';
 
 const Home = lazy(() => import('./Pages/home'));
 const Seacrh = lazy(() => import('./Pages/search'));
-const Cart = lazy(() => import('./Pages/Cart'));
+const Cart = lazy(() => import('./Pages/cart'));
 
 const ProductDetails = lazy(() => import('./Pages/product-details'));
 const Shipping = lazy(() => import('./Pages/Shipping'));

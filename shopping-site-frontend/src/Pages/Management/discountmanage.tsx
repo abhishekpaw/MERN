@@ -21,7 +21,7 @@ const DiscountManagement = () => {
 
     const {id} = useParams();
 
-    const {data, error, loading:isLoading} = useFetchData<SingleDiscountResponse>({
+    const {data, loading:isLoading} = useFetchData<SingleDiscountResponse>({
           url: `${server}/api/v1/payment/coupon/${id}?id=${user?._id}`,"key": "all-coupons",  
             dependencyProps: [user?._id!,id!],
         });

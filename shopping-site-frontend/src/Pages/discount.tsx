@@ -1,16 +1,16 @@
+import { useFetchData } from "6pp";
+import type { ColumnDef } from "@tanstack/react-table";
+import { useEffect, useState, type ReactElement } from "react";
+import toast from "react-hot-toast";
+import { FaPlus } from "react-icons/fa6";
+import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import AdminSidebar from "../components/AdminSidebar";
 import { Skeleton } from "../components/loader";
-import { FaPlus } from "react-icons/fa6";
-import { useEffect, useState, type ReactElement } from "react";
 import TableHOC from "../components/TableHOC";
-import type { ColumnDef } from "@tanstack/react-table";
-import type { AllDiscountResponse, CustomError } from "../types/api-types";
-import { useFetchData } from "6pp";
 import { server } from "../redux/store";
-import toast from "react-hot-toast";
+import type { AllDiscountResponse } from "../types/api-types";
 import type { UserReducerInitialState } from "../types/reducer-types";
-import { useSelector } from "react-redux";
 
 interface DataType {
   _id: string;

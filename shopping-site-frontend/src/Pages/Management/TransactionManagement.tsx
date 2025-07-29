@@ -39,7 +39,7 @@ const TransactionManagement = () => {
   const params = useParams();
   const navigate = useNavigate();
 
-  const { isLoading, data, isError, error } = useOrderDetailsQuery(params.id!);
+  const { isLoading, data, isError } = useOrderDetailsQuery(params.id!);
 
   const {
     shippingInfo: { address, city, state, country, pincode },
