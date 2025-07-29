@@ -1,16 +1,15 @@
-import { useEffect, useMemo, useState, type ReactElement } from "react";
-import AdminSidebar from "../components/AdminSidebar";
-import TableHOC from "../components/TableHOC";
 import type { ColumnDef } from "@tanstack/react-table";
-import { Link } from "react-router-dom";
-import { FaPlus } from "react-icons/fa6";
-import { useAllProductsQuery } from "../redux/api/productAPI";
-import { server } from "../redux/store";
-import type { AllProductsResponse, CustomError } from "../types/api-types";
+import { useEffect, useState, type ReactElement } from "react";
 import toast from "react-hot-toast";
+import { FaPlus } from "react-icons/fa6";
 import { useSelector } from "react-redux";
-import type { UserReducerInitialState } from "../types/reducer-types";
+import { Link } from "react-router-dom";
+import AdminSidebar from "../components/AdminSidebar";
 import { Skeleton } from "../components/loader";
+import TableHOC from "../components/TableHOC";
+import { useAllProductsQuery } from "../redux/api/productAPI";
+import type { CustomError } from "../types/api-types";
+import type { UserReducerInitialState } from "../types/reducer-types";
 
 
 

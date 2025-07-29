@@ -1,9 +1,8 @@
-import { strict } from "assert";
 import { myCache } from "../app.js";
 import { TryCatch } from "../middlewares/error.js";
+import { Order } from "../models/order.js";
 import { Product } from "../models/product.js";
 import { User } from "../models/user.js";
-import { Order } from "../models/order.js";
 import { calculatePercentage, getChartData, getInventories } from "../utils/feature.js";
 
 export const getDashboardStats = TryCatch(async(req,res,next)=>{
