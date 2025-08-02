@@ -7,12 +7,49 @@
     height: calc(100vh - 4rem);
     width: 100%;
 
-    >section{
-        width: 100%;
-        height: 20rem;
-        margin: auto;
-        background: url(../assets/NIKE+DUNK+LOW+RETRO.avif) no-repeat center / cover;
-    }
+    
+
+    @keyframes fadeInSlideUp {
+            from {
+                opacity: 0;
+                transform: translateY(2rem);
+            }
+    
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    
+        .hero-section {
+            height: 10rem;
+            background-color: #f3f4f6;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transform: translateY(2rem);
+            transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+    
+            &.show {
+                animation: fadeInSlideUp 0.8s ease-out forwards;
+            }
+    
+            .hero-content {
+                text-align: center;
+    
+                h1 {
+                    font-size: 1.5rem;
+                    font-weight: bold;
+                    margin-bottom: 0.25rem;
+                }
+    
+                p {
+                    color: #4b5563;
+                    font-size: 1rem;
+                }
+            }
+        }
 
     >h1{
         @include mixing.heading(1px);
