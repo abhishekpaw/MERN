@@ -8,7 +8,7 @@ import { useNewOrderMutation } from '../redux/api/orderAPI';
 import { resetCart } from '../redux/reducer/cartReducer';
 import type { RootState } from '../redux/store';
 import type { NewOrderRequest } from '../types/api-types';
-import { reponseToast } from '../utils/feature';
+import { responseToast } from '../utils/feature';
 
 
 const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_KEY);
@@ -64,7 +64,7 @@ const CheckOutForm = () => {
         const res = await newOrder(orderData);
         dispatch(resetCart());
         console.log("Placing Order");
-        reponseToast(res,navigate,"/orders");
+        responseToast(res,navigate,"/orders");
         navigate("/orders");
       }
       setIsProcessing(false);

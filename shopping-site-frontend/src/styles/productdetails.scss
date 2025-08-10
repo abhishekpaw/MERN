@@ -25,7 +25,7 @@
                     margin: 1rem 0;
                 }
                 code{
-                    font-size: 1.2rem;
+                    font-size: 1rem;
                     background-color: rgba(5,107,224);
                     color: white;
                     border-radius: 10px;
@@ -87,8 +87,84 @@
             }
         }
     }
+
+    >section{
+        max-width: 1920px;
+        width: 100%;
+        margin: auto;
+        >article {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            >h2 {
+                @include mixing.heading;
+            }
+            > button {
+                background-color: rgb(29,29,29);
+                border: none;
+                cursor: pointer;
+                color: white;
+                border-radius: 50%;
+                width: 3rem;
+                height: 3rem;
+                place-items: center;
+                font-size: 1.5rem;
+            }
+        }
+    }
 }
 
+.review-dialog {
+    width: 30rem;
+    position: relative;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    padding: 2rem;
+    border: none;
+    border-radius: 0.5rem;
+    >button {
+        position: absolute;
+        top: 0.5rem;
+        right: 0.5rem;
+        background-color: rgb(29,29,29);
+        color: white;
+        border: none;
+        cursor: pointer;
+        border-radius: 50%;
+        width: 2rem;
+        height: 2rem;
+        display: grid;
+        place-items: center;
+        font-size: 1.5rem;
+    }
+    >h2{
+        @include mixing.heading;
+    }
+    >form{
+        margin: 1rem 0;
+        @include mixing.flex(column);
+        >textarea {
+            min-height: 25vh;
+            padding: 1rem;
+            border: 1px solid rgb(29,29,29);
+            border-radius: 5px;
+            font-size: 1.2rem;
+            width: 100%;
+        }
+        >button {
+            width: 100%;
+            background-color: rgb(29,29,29);
+            color: white;
+            border: none;
+            cursor: pointer;
+            padding: 1rem;
+            border-radius: 5px;
+            font-size: 1.2rem;
+        }
+    }
+}
 .caraousel-btn {
     background-color: rgba(0,0,0,0.5);
     color: white;
@@ -98,4 +174,52 @@
     cursor: pointer;
     display: grid;
     place-items: center;
+}
+
+.review {
+    position: relative;
+    width: 45rem;
+    flex: none;
+    background-color: rgb(244,244,244);
+    padding: 2rem;
+    border-radius: 1rem;
+    margin: 1rem 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 1rem;
+    p {
+        font-size: 1.2rem;
+        font-weight: 300;
+    }
+
+    >div {
+        display: flex;
+        gap: 1rem;
+        align-items: center;
+        img {
+            width: 2rem;
+            height: 2rem;
+            border-radius: 50%;
+        }
+        small{
+            color: rgb(0,104,136);
+        }
+    }
+
+    >button {
+        position: absolute;
+        top: -1.25rem;
+        right: -1.25rem;
+        width: 2.5rem;
+        height: 2.5rem;
+        background-color: rgb(29,29,29);
+        color: white;
+        border: none;
+        cursor: pointer;
+        border-radius: 50%;
+        display: grid;
+        place-items: center;
+        font-size: 1.25rem;
+    }
 }

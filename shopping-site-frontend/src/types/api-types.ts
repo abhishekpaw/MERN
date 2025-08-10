@@ -1,4 +1,4 @@
-import type { Bar, CartItem, CouponType, Line, Order, Pie, Product, shippingInfo, Stats, User } from "./types";
+import type { Bar, CartItem, CouponType, Line, Order, Pie, Product, Review, shippingInfo, Stats, User } from "./types";
 
 
 export type CustomError = {
@@ -32,6 +32,11 @@ export type CategoriesResponse = {
 export type AllProductsResponse = {
     success: boolean;
     products: Product[];
+}; 
+
+export type AllReviwesResponse = {
+    success: boolean;
+    reviews: Review[];
 }; 
 
 export type SearchProductResponse = AllProductsResponse & {
@@ -81,12 +86,24 @@ export type SearchProductsRequest = {
     sort: string;
 }
 
+export type NewReviewRequest = {
+    rating: number;
+    comment: string;
+    userId?: string;
+    productId: string;
+};
 
+export type DeleteReviewRequest = {
+    userId?: string;
+    reviewId: string;
+};
 
 export type NewProductRequest = {
     id: string;
     formData: FormData;
 };
+
+
 
 export type UpdateProductRequest = {
     userId: string;
@@ -128,6 +145,27 @@ coupons: CouponType[];
 
 export type SingleDiscountResponse = {
 success: boolean;
-coupons: CouponType[];
+coupon: CouponType;
 };
 
+export type NewDiscountRequest = {
+    userId: string;
+    formData: {
+        code: string;
+        amount: number;
+  };
+};
+
+export type UpdateDiscountRequest = {
+    userId: string;
+    id: string;
+    formData: {
+        code: string;
+        amount: number;
+  };
+};
+
+export type DeleteDiscountRequest = {
+    userId: string;
+    id: string;
+};

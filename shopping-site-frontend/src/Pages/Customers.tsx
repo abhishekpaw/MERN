@@ -9,7 +9,7 @@ import TableHOC from "../components/TableHOC";
 import { useAllUsersQuery, useDeleteUserMutation } from "../redux/api/userAPI";
 import type { RootState } from "../redux/store";
 import type { CustomError } from "../types/api-types";
-import { reponseToast } from "../utils/feature";
+import { responseToast, transformImage } from "../utils/feature";
 
 interface DataType {
   Avatar: ReactElement;
@@ -50,7 +50,7 @@ const Customers = () => {
 
   const deleteHandler = async (userId: string) => {
     const res = await deleteUser({ userId, adminUserId: user?._id! });
-    reponseToast(res, null, "");
+    responseToast(res, null, "");
   };
   if (isError) {
     const err = error as CustomError;
@@ -61,7 +61,7 @@ const Customers = () => {
     if (data)
       setRows(
         data.users.map((i) => ({
-          Avatar: <img style={{borderRadius: "50%"}} src={i.photo} alt={i.name}/>,
+          Avatar: <img style={{borderRadius: "50%"}} src={transformImage(i.photo)} alt={i.name}/>,
           name: i.name,
           email: i.email,
           gender: i.gender,
