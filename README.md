@@ -89,13 +89,13 @@ npm run dev
 
 ![MERN Payment page](./shopping-site-frontend/src/assets/PaymentPage.png)
 
-<h3>Admin dashboard - All orders page</h3>
+<h3>Admin dashboard</h3>
 
 ![MERN admin Dashboard page](./shopping-site-frontend/src/assets/AdminDashboard.png)
 
 <h3>Admin dashboard - All Transaction page</h3>
 
-![MERN admin Transaction page](./shopping-site-frontend/src/assets/AdminDashboard.png)
+![MERN admin Transaction page](./shopping-site-frontend/src/assets/AdminTransaction.png)
 
 <h3>Admin dashboard - All products page</h3>
 
