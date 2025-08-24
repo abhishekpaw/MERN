@@ -11,6 +11,7 @@ import Table from "../components/DashboardTable";
 import { Skeleton } from "../components/loader";
 import { useStatsQuery } from "../redux/api/dashboardAPI";
 import type { RootState } from "../redux/store";
+import { transformImage } from "../utils/feature";
 
 const Dashboard = () => {
     const { user } = useSelector((state: RootState) => state.userReducer);
@@ -33,7 +34,7 @@ const Dashboard = () => {
               <BsSearch />
               <input type="text" placeholder="Search for data,users,docs" />
               <FaRegBell />
-              <img src={user?.photo! || userimg} alt="user" />
+              <img src={transformImage(user?.photo! || userimg)} alt="user" />
             </div>
             <section className="widget-container">
               <WidgetItem

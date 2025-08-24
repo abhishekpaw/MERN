@@ -1,52 +1,113 @@
-import { MyntraCarousel, Slider, type CarouselButtonType } from "6pp";
-import { useState } from "react";
+import { MyntraCarousel, Slider, useRating, type CarouselButtonType } from "6pp";
+import { useRef, useState } from "react";
 import toast from "react-hot-toast";
 import { FaArrowCircleLeft, FaArrowCircleRight } from "react-icons/fa";
-import { useDispatch } from "react-redux";
+import { FaRegStar, FaStar, FaTrash } from "react-icons/fa6";
+import { FiEdit } from "react-icons/fi";
+import { useDispatch, useSelector } from "react-redux";
 import { Navigate, useParams } from "react-router-dom";
 import { Skeleton } from "../components/loader";
 import RatingsComponent from "../components/ratings";
-import { useProductDetailsQuery } from "../redux/api/productAPI";
+import { useAllReviewsOfProductsQuery, useDeleteReviewMutation, useNewReviewMutation, useProductDetailsQuery } from "../redux/api/productAPI";
 import { addToCart } from "../redux/reducer/cartReducer";
-import type { CartItem } from "../types/types";
+import type { RootState } from "../redux/store";
+import type { CartItem, Review } from "../types/types";
+import { responseToast } from "../utils/feature";
 
 const ProductDetails = () => {
+  const dispatch = useDispatch();
 
-        const dispatch = useDispatch();
+  const params = useParams();
+  const {user} = useSelector((state:RootState) => state.userReducer);
 
-    const params = useParams();
-    const{isLoading,isError,data} = useProductDetailsQuery(params.id!);
+  const { isLoading, isError, data } = useProductDetailsQuery(params.id!);
+  const reviewsResponse = useAllReviewsOfProductsQuery(params.id!);
 
-    const[carouselOpen,setCarouselOpen] = useState(false);
-          const[quantity,setQuantity] = useState(0);  
+  const [carouselOpen, setCarouselOpen] = useState(false);
+  const [quantity, setQuantity] = useState(0);
+  const [reviewComment,setReviewComment] = useState("");
 
-      const incrementQuantity = () => {
-        if(data?.product?.stock === quantity){
-          return toast.error(`${data?.product?.stock} is the maximum stock available`);
-        }
-        setQuantity((prev) => prev + 1);
-      };
+  const reviewDialogRef = useRef<HTMLDialogElement>(null);
 
-      const decrementQuantity = () => {
-        setQuantity((prev) => prev - 1);
-        if (quantity <= 0) {
-          setQuantity(0);
-        }
-      };
+  const [reviewSubmitLoading,setReviewSubmitLoading] = useState(false);
 
-            const addToCartHandler = (cartItem: CartItem) => {
-            if(cartItem.stock < 1) return toast.error("Out Of Stock");
-            if (quantity <= 0) {
-                return toast.error("Please select a quantity greater than 0");
-            }
-            dispatch(addToCart(cartItem));
-            toast.success("Added to Cart");
-        }
+  const [createReview] = useNewReviewMutation();
+  const [deleteReview] = useDeleteReviewMutation();
 
-        if(isError) {
-          return <Navigate to="/404" />
-        }
+  const incrementQuantity = () => {
+    if (data?.product?.stock === quantity) {
+      return toast.error(
+        `${data?.product?.stock} available in stock`
+      );
+    }
+    setQuantity((prev) => prev + 1);
+  };
 
+  const decrementQuantity = () => {
+    setQuantity((prev) => prev - 1);
+    if (quantity <= 0) {
+      setQuantity(0);
+    }
+  };
+
+  const addToCartHandler = (cartItem: CartItem) => {
+    if (cartItem.stock < 1) return toast.error("Out Of Stock");
+    if (cartItem.stock < quantity) {
+      return toast.error(
+        `Only ${cartItem.stock} items available in stock`
+      );
+    }
+    if (quantity <= 0) {
+      return toast.error("Please select a quantity greater than 0");
+    }
+    dispatch(addToCart(cartItem));
+    toast.success("Added to Cart");
+  };
+
+  if (isError) {
+    return <Navigate to="/404" />;
+  }
+
+  const showDialog = () => {
+    reviewDialogRef.current?.showModal();
+  }
+
+  const { Ratings: RatingsEditable,rating,setRating } = useRating({
+      IconFilled: <FaStar />,
+      IconOutline: <FaRegStar />,
+      value:0,
+      selectable: true,
+      styles: {
+          fontSize: "1.75rem",
+          color: "coral",
+          justifyContent: "flex-start",
+      },
+    });
+
+    const reviewCloseHandler = () => {
+      reviewDialogRef.current?.close();
+      setRating(0);
+      setReviewComment("");
+    };
+
+    const submitReview = async(e: React.FormEvent<HTMLFormElement>) => {
+      e.preventDefault();
+      reviewCloseHandler();
+      setReviewSubmitLoading(true);
+
+      //API call to submit review
+
+      const res = await createReview({comment: reviewComment,rating,userId:user?._id,productId:params.id!});
+
+      setReviewSubmitLoading(false);
+
+      responseToast(res, null,"");
+    }
+
+    const deleteReviewHandler = async(reviewId: string) => {
+      const res = await deleteReview({ reviewId, userId: user?._id});
+      responseToast(res,null,"")
+    }
   return (
     <div className="product-details">
       {isLoading ? (
@@ -71,9 +132,12 @@ const ProductDetails = () => {
               )}
             </section>
             <section>
-              <code>{data?.product?.category}</code>              
+              <code>{data?.product?.category}</code>
               <h1>{data?.product?.name}</h1>
-              <RatingsComponent value={data?.product?.ratings || 0} />
+              <em style={{ display: "flex", gap: "1rem", alignItems: "center"}}>
+                <RatingsComponent value={data?.product?.ratings || 0} />
+                {data?.product?.numOfReviews} reviews
+              </em>
               <h3>₹{data?.product?.price}</h3>
               <article>
                 <div>
@@ -101,10 +165,64 @@ const ProductDetails = () => {
           </main>
         </>
       )}
+
+
+      <dialog ref={reviewDialogRef} className="review-dialog">
+        <button onClick={reviewCloseHandler}>X</button>
+        <h2>Write a Review</h2>
+        <form onSubmit={submitReview}>
+          <textarea value={reviewComment} onChange={e=>setReviewComment(e.target.value)} placeholder="Review..."></textarea>
+          <RatingsEditable/>
+          <button disabled={reviewSubmitLoading} type="submit">
+            Submit
+          </button>
+        </form>
+      </dialog>
+      <section>
+        <article>
+          <h2>Reviews</h2>
+          {reviewsResponse.isLoading ? null : (
+            <button onClick={showDialog}>
+            <FiEdit/>
+          </button>
+          )}
+          
+        </article>
+        <div style={{display: "flex", gap: "2rem", overflowX: "auto",padding: "2rem"}}>
+          {
+          reviewsResponse.isLoading ? (
+            <>
+              <Skeleton width="45rem" length={5}/>
+              <Skeleton width="45rem" length={5}/>
+              <Skeleton width="45rem" length={5}/>
+            </>
+          ) :( reviewsResponse.data?.reviews.map((review) => (
+            <>
+              <ReviewCard deleteReviewHandler={deleteReviewHandler} key={review._id} userId={user?._id} review={review}/>
+            </>
+          )))
+        }
+        </div>
+      </section>
     </div>
   );
-}
+};
 
+const ReviewCard = ({ review, userId,deleteReviewHandler }: { userId?: string; review: Review;deleteReviewHandler: (reviewId : string) => void }) => (
+  <div className="review">
+    <RatingsComponent value={review.rating} />
+    <p>{review.comment}</p>
+    <div>
+      <img src={review.user?.photo} alt="User" />
+      <small>{review.user.name}</small>
+    </div>
+    {userId === review.user._id && (
+      <button onClick={()=>deleteReviewHandler(review._id)}>
+        <FaTrash />
+      </button>
+    )}
+  </div>
+);
 
 const ProductLoader = () => {
   return (
@@ -140,18 +258,18 @@ const ProductLoader = () => {
       </section>
     </div>
   );
-}
+};
 
-const NextButton:CarouselButtonType = ({onClick}) => (
+const NextButton: CarouselButtonType = ({ onClick }) => (
   <button onClick={onClick} className="caraousel-btn">
-    <FaArrowCircleRight/>
+    <FaArrowCircleRight />
   </button>
-)
+);
 
-const PrevButton:CarouselButtonType = ({onClick}) => (
+const PrevButton: CarouselButtonType = ({ onClick }) => (
   <button onClick={onClick} className="caraousel-btn">
-        <FaArrowCircleLeft/>
+    <FaArrowCircleLeft />
   </button>
-)
+);
 
-export default ProductDetails
+export default ProductDetails;

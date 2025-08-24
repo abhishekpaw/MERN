@@ -11,7 +11,7 @@ type ResType = {
     error: FetchBaseQueryError | SerializedError
 }
 
-export const reponseToast = (
+export const responseToast = (
     res: ResType,
     navigate: NavigateFunction | null,
     url: string
@@ -51,3 +51,8 @@ export const getLastMonths = () => {
         last6Months,
     };
 };
+
+export const transformImage = (url: string, width = 100) => {
+    const newUrl = url.replace("upload/",`upload/dpr_auto/w_${width}/`);
+    return newUrl;
+}

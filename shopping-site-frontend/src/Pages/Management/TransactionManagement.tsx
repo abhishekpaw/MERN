@@ -7,7 +7,7 @@ import { useDeleteOrderMutation, useOrderDetailsQuery, useUpdateOrderMutation } 
 import type { OrderItemType } from "../../types";
 import type { UserReducerInitialState } from "../../types/reducer-types";
 import type { Order } from "../../types/types";
-import { reponseToast } from "../../utils/feature";
+import { responseToast, transformImage } from "../../utils/feature";
 
 const defaultdata: Order = {
   shippingInfo: {
@@ -61,7 +61,7 @@ const TransactionManagement = () => {
       userId: user?._id!,
       orderId: data?.order._id!,
     });
-    reponseToast(res,navigate,"/admin/transaction");
+    responseToast(res,navigate,"/admin/transaction");
   };
 
   const deleteHandler = async () => {
@@ -69,7 +69,7 @@ const TransactionManagement = () => {
       userId: user?._id!,
       orderId: data?.order._id!,
     });
-    reponseToast(res, navigate, "/admin/transaction");
+    responseToast(res, navigate, "/admin/transaction");
   };
 
   if (isError) return <Navigate to={"/404"} />;
@@ -140,7 +140,7 @@ const TransactionManagement = () => {
 const ProductCard = ({ name , photo, price,quantity, _id}: OrderItemType) =>{
   return (
     <div className="transaction-product-card">
-      <img src={photo} alt={name} />
+      <img src={transformImage(photo)} alt={name} />
       <Link to={`/product/${_id}`}>{name}</Link>
       <span>
         ₹{price} X {quantity} = ₹{price * quantity}

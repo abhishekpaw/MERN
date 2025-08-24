@@ -117,9 +117,9 @@ export const getCoupon = TryCatch(async(req,res,next) => {
 export const updateCoupon = TryCatch(async(req,res,next) => {
 
     const {id} = req.params;
-
+    console.log(req.body);
     const { code, amount} = req.body;
-
+    console.log(req.body);
     const coupon = await Coupon.findById(id);
 
     if(!coupon){
@@ -137,7 +137,7 @@ export const updateCoupon = TryCatch(async(req,res,next) => {
 
     res.status(200).json({
       success: true,
-      meassage:`Coupon ${coupon.code} Updated Successfully`,
+      message:`Coupon ${coupon.code} Updated Successfully`,
     });
 });
 
@@ -153,6 +153,6 @@ export const deleteCoupon = TryCatch(async(req,res,next) => {
 
     res.status(200).json({
       success: true,
-      meassage:`Coupon ${coupon.code} Deleted Successfully`,
+      message:`Coupon ${coupon.code} Deleted Successfully`,
     });
 });

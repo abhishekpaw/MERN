@@ -7,7 +7,7 @@ import AdminSidebar from "../../components/AdminSidebar";
 import { Skeleton } from "../../components/loader";
 import { useDeleteProductMutation, useProductDetailsQuery, useUpdateProductMutation } from "../../redux/api/productAPI";
 import type { UserReducerInitialState } from "../../types/reducer-types";
-import { reponseToast } from "../../utils/feature";
+import { responseToast, transformImage } from "../../utils/feature";
 
 
 const ProductManagement = () => {
@@ -60,7 +60,7 @@ const ProductManagement = () => {
           productId: data?.product._id!,
         });
 
-        reponseToast(res, navigate, "/admin/product");
+        responseToast(res, navigate, "/admin/product");
       } catch (error) {
         console.error("Error updating product:", error);
         setBtnLoading(false);
@@ -77,7 +77,7 @@ const ProductManagement = () => {
         productId: data?.product._id!,
       })
 
-      reponseToast(res,navigate,"/admin/product");
+      responseToast(res,navigate,"/admin/product");
       
     };
 
@@ -105,7 +105,7 @@ const ProductManagement = () => {
           <>
             <section>
               <strong>ID - {data?.product._id}</strong>
-              <img src={photos?.[0]?.url} alt="product" />
+              <img src={transformImage(photos?.[0]?.url)} alt="product" />
               <p>{name}</p>
               {stock > 0 ? (
                 <span className="green">{stock} Available</span>

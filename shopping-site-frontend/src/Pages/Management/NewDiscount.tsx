@@ -1,18 +1,16 @@
 import { useEffect, useState, type FormEvent } from "react";
-import { FaTrash } from "react-icons/fa6";
 import { useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import AdminSidebar from "../../components/AdminSidebar";
 import { Skeleton } from "../../components/loader";
 import {
-  useDeleteDiscountMutation,
-  useSinglediscountQuery,
-  useUpdateDiscountMutation
+    useNewDiscountMutation,
+    useSinglediscountQuery
 } from "../../redux/api/discountAPI";
 import type { UserReducerInitialState } from "../../types/reducer-types";
 import { responseToast } from "../../utils/feature";
 
-const DiscountManagement = () => {
+const NewDiscount = () => {
 
   const { user } = useSelector(
     (state: { userReducer: UserReducerInitialState }) => state.userReducer
@@ -20,7 +18,6 @@ const DiscountManagement = () => {
 
   const { id } = useParams();
   const navigate = useNavigate();
-
 
   const { data, isLoading } = useSinglediscountQuery({
     id: id!,
@@ -32,8 +29,8 @@ const DiscountManagement = () => {
   const [codeUpdate, setCodeUpdate] = useState<string>(code);
   const [isBtnLoading, setIsBtnLoading] = useState<boolean>(false);
 
-  const [updateDiscount] = useUpdateDiscountMutation();
-  const [deleteDiscount] = useDeleteDiscountMutation();
+    const [newDiscount] = useNewDiscountMutation();
+
 
   const submitHandler = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -45,10 +42,9 @@ const DiscountManagement = () => {
         amount: amountUpdate,
       };
 
-      const res = await updateDiscount({
+      const res = await newDiscount({
         formData: payload,
         userId: user?._id!,
-        id: data?.coupon._id!,
       });
       responseToast(res, navigate, "/admin/discount");
     } catch (error) {
@@ -57,17 +53,6 @@ const DiscountManagement = () => {
       setIsBtnLoading(false);
     }
   };
-
-    const deleteHandler = async() => {
-
-      const res = await deleteDiscount({
-        userId: user?._id!,
-        id: data?.coupon._id!,
-      })
-
-      responseToast(res,navigate,"/admin/discount");
-      
-    };
 
   useEffect(() => {
     if (data?.coupon) {
@@ -85,11 +70,8 @@ const DiscountManagement = () => {
         ) : (
           <>
             <article>
-              <button className="product-delete-btn" onClick={deleteHandler}>
-                <FaTrash />
-              </button>
               <form onSubmit={submitHandler}>
-                <h2>Manage</h2>
+                <h2>New Discount</h2>
                 <div>
                   <label>Coupon Code</label>
                   <input
@@ -109,7 +91,7 @@ const DiscountManagement = () => {
                   />
                 </div>
                 <button disabled={isBtnLoading} type="submit">
-                  {isBtnLoading ? "Updating..." : "Update"}
+                  {isBtnLoading ? "Creating..." : "Create"}
                 </button>
               </form>
             </article>
@@ -120,4 +102,4 @@ const DiscountManagement = () => {
   );
 };
 
-export default DiscountManagement;
+export default NewDiscount;

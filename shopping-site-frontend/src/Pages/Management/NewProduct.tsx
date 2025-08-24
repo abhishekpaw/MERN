@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import AdminSidebar from "../../components/AdminSidebar";
 import { useNewProductMutation } from "../../redux/api/productAPI";
 import type { UserReducerInitialState } from "../../types/reducer-types";
-import { reponseToast } from "../../utils/feature";
+import { responseToast } from "../../utils/feature";
 
 const NewProduct = () => {
     const { user} = useSelector((state: { userReducer: UserReducerInitialState}) => state.userReducer);
@@ -47,7 +47,7 @@ const NewProduct = () => {
           });
           const res = await newProduct({ id: user?._id!, formData });
 
-          reponseToast(res, navigate, "/admin/product");
+          responseToast(res, navigate, "/admin/product");
         } catch (error) {
             console.error("Error creating product:", error);
             setIsLoading(false);

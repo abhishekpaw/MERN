@@ -4,7 +4,24 @@ import { Product } from "../models/product.js";
 import { InvalidCacheProps, orderItemType } from "../types/types.js";
 import { v2 as cloudinary, UploadApiResponse } from "cloudinary";
 import { get } from "http";
+import { Review } from "../models/review.js";
 
+export const findAverageRatings = async(productId: mongoose.Types.ObjectId) => {
+      let totalRating = 0;
+    
+      const reviews = await Review.find({ product: productId});
+    
+      reviews.forEach((review) => {
+        totalRating += review.rating;
+      });
+    
+      const averageRating = Math.floor(totalRating / reviews.length) || 0;
+    
+      return {
+        ratings: averageRating,
+        numOfReviews: reviews.length,
+      };
+};
 
 const getBase64 = (file: Express.Multer.File) => {
     return `data:${file.mimetype};base64,${file.buffer.toString("base64")}`;
